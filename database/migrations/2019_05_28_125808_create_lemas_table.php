@@ -17,7 +17,7 @@ class CreateLemasTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('number');
-            $table->integer('letter');
+            $table->integer('total_votes')->nullable()->unsigned();
 
             $table->timestamps();
         });

@@ -3,11 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Table;
+use App\User;
+use App\Municipality;
+use App\Sublema;
+use App\Charge;
+use App\School;
 
 class TableController extends Controller
 {
+
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +32,8 @@ class TableController extends Controller
      */
     public function index()
     {
-        $tables = Table::list();
-        return "mesa 150";
+        $tables = Table::with('school')->paginate(7);
+        return view('tables.index',compact('tables'));
     }
 
     /**
@@ -83,5 +100,15 @@ class TableController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function cargarVotos()
+    {
+      //Muestro el formulario para cargar
+      $user = User::find(Auth::user()->id);
+      $schools = School::whereMunicipalityId($user->municipality->id)->get();
+      $charges = Charge::get();
+      return view('tables.cargar',compact('schools','charges'));
+
     }
 }

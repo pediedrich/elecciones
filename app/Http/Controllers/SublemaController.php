@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Sublema;
+
 class SublemaController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class SublemaController extends Controller
      */
     public function index()
     {
-        //
+        $sublemas = Sublema::with('lema')->paginate(7);
+        return view('sublemas.index',compact('sublemas'));
     }
 
     /**

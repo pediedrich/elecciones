@@ -15,6 +15,14 @@ class CreateTablesTable extends Migration
     {
         Schema::create('tables', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('number');
+            $table->integer('null_votes')->nullable();
+            $table->integer('blank_votes')->nullable();
+            $table->integer('total_votes')->nullable();
+
+            $table->integer('school_id')->unsigned();
+            $table->foreign('school_id')->references('id')->on('schools');
+
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ class CreateCircuitsTable extends Migration
     {
         Schema::create('circuits', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('code');
+            $table->string('name')->nullable();
+            $table->integer('code')->nullable();
 
             $table->integer('section_id')->unsigned();
             $table->foreign('section_id')->references('id')->on('sections');

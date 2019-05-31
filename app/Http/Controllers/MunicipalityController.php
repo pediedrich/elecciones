@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Municipality;
+
 class MunicipalityController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class MunicipalityController extends Controller
      */
     public function index()
     {
-        //
+      $municipalities = Municipality::with('circuit')->paginate(7);
+      return view('municipalities.index',compact('municipalities'));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Charge;
 class ChargeController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class ChargeController extends Controller
      */
     public function index()
     {
-        //
+      $charges = Charge::paginate(7);
+      return view('charges.index',compact('charges'));
     }
 
     /**

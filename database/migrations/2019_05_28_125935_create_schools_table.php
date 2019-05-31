@@ -15,6 +15,14 @@ class CreateSchoolsTable extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('address');
+            $table->string('distric')->nullable();
+            $table->string('letter')->nullable();
+
+            $table->integer('municipality_id')->unsigned();
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
+
             $table->timestamps();
         });
     }

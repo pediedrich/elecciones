@@ -25,6 +25,23 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('municipality_id') ? ' has-error' : '' }}">
+                            <label for="municipality_id" class="col-md-4 control-label">Municipio</label>
+
+                            <div class="col-md-6">
+
+                                @if ($errors->has('municipality_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('municipality_id') }}</strong>
+                                    </span>
+                                @endif
+                                <select class="form-control" name="municipality_id">
+                                  @foreach ($municipalities as $key => $value)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 

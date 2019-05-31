@@ -6,5 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lema extends Model
 {
-    //
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+      'name', 'number', 'letter',
+  ];
+
+  public function sublemas()
+  {
+    $this->hasMany('App\Sublema');
+  }
 }

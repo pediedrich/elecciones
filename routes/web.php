@@ -20,4 +20,15 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::resource('/tables','TableController');
+Route::get('/mesas/cargar-votos',[
+  'uses' => 'TableController@cargarVotos',
+  'as' => 'cargar'
+]);
+
+Route::resource('/mesas','TableController');
+Route::resource('/circuitos','CircuitController');
+Route::resource('/escuelas','SchoolController');
+Route::resource('/lemas','LemaController');
+Route::resource('/sublemas','SublemaController');
+Route::resource('/cargos','ChargeController');
+Route::resource('/municipios','MunicipalityController');

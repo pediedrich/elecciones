@@ -15,6 +15,17 @@ class CreateSublemasTable extends Migration
     {
         Schema::create('sublemas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('letter')->nullable();
+            $table->integer('number')->nullable();
+            $table->integer('total_votes')->nullable()->unsigned();
+
+            $table->integer('lema_id')->unsigned();
+            $table->foreign('lema_id')->references('id')->on('lemas');
+
+            $table->integer('municipality_id')->unsigned();
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
+
             $table->timestamps();
         });
     }

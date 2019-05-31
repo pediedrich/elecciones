@@ -19,6 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
+
+            $table->integer('municipality_id')->unsigned();
+            $table->foreign('municipality_id')->references('id')->on('municipalities');
+
             $table->timestamps();
         });
     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Lema;
+
 class LemaController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class LemaController extends Controller
      */
     public function index()
     {
-        //
+      $lemas = Lema::paginate(7);
+      return view('lemas.index',compact('lemas'));
     }
 
     /**

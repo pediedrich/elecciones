@@ -17,6 +17,6 @@ class Lema extends Model
 
   public function sublemas()
   {
-    $this->hasMany('App\Sublema');
+    return Sublema::whereLemaId($this->id)->get();
   }
 }

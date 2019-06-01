@@ -20,12 +20,20 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/mesas/cargar-votos',[
-  'uses' => 'TableController@cargarVotos',
-  'as' => 'cargar'
-]);
+Route::get('/mesas/votos/cargar/certificado/','TableController@ajaxLoadCertificate');
 
 Route::resource('/mesas','TableController');
+
+Route::get('/mesas/votos/cargar',[
+  'uses' => 'TableController@loadVotes',
+  'as' => 'loadVotes'
+]);
+
+Route::post('/mesas/votos/guardar',[
+  'uses' => 'ResultController@saveVotes',
+  'as' => 'saveVotes'
+]);
+
 Route::resource('/circuitos','CircuitController');
 Route::resource('/escuelas','SchoolController');
 Route::resource('/lemas','LemaController');

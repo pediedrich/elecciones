@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+
+use App\Result;
 use App\Table;
 use App\User;
 use App\Municipality;
@@ -13,20 +15,8 @@ use App\Sublema;
 use App\Charge;
 use App\School;
 
-class TableController extends Controller
+class ResultController extends Controller
 {
-
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
-  public function __construct()
-  {
-      $this->middleware('auth');
-  }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -34,8 +24,7 @@ class TableController extends Controller
      */
     public function index()
     {
-        $tables = Table::with('school')->paginate(7);
-        return view('tables.index',compact('tables'));
+        //
     }
 
     /**
@@ -104,19 +93,54 @@ class TableController extends Controller
         //
     }
 
-    public function loadVotes()
+    public function saveVotes(Request $request)
     {
-      //Muestro el formulario para cargar
-      $user = User::find(Auth::user()->id);
-      $schools = School::whereMunicipalityId($user->municipality->id)->get();
 
-      return view('tables.load',compact('schools'));
+      $id = $request->table_id;
+
+      //busco la mesa correspondiente a la carga y updateo los campos necesarios
+      $table = Table::find($id);
+      $table->state = "cargada";
+      $table->null_votes = $request->null_votes;
+      $table->blank_votes = $request->blank_votes;
+      $table->total_votes = $request->total_votes;
+      $table->update();
+
+      //recorro lemas y guardo
+      $lemas = $request->lemas;
+      foreach ($lemas as $lema_id => $charges) {
+        foreach ($charges as $charge_id => $total) {
+          if ($total == 0 || is_null($total)) {
+            $total = 0;
+          }
+          $result = new Result();
+          $result->table_id = $id;
+          $result->lema_id = $lema_id;
+          $result->charge_id = $charge_id;
+          $result->total = $total;
+          $result->save();
+        }
+      }
+
+      /**
+       * CARGO LOS DATOS DE LA MESA
+       * Sublemas - Cargos y cantidad de votos
+       */
+      $sublemas = $request->sublemas;
+      foreach ($sublemas as $sublema_id => $charges) {
+        foreach ($charges as $charge_id => $total) {
+          if ($total == 0 || is_null($total)) {
+            $total = 0;
+          }
+          $result = new Result();
+          $result->table_id = $id;
+          $result->sublema_id = $sublema_id;
+          $result->charge_id = $charge_id;
+          $result->total = $total;
+          $result->save();
+        }
+      }
+
     }
 
-    public function ajaxLoadCertificate(Request $request){
-      $table_id = Input::get('table_id');
-      $lemas = Lema::get();
-      $charges = Charge::get();
-      return view('tables/ajax/certificate',compact('table_id','charges','lemas'));
-    }
 }

@@ -16,6 +16,7 @@ class CreateTablesTable extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number');
+            $table->string('state');
             $table->integer('null_votes')->nullable();
             $table->integer('blank_votes')->nullable();
             $table->integer('total_votes')->nullable();

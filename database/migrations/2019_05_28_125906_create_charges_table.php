@@ -16,6 +16,7 @@ class CreateChargesTable extends Migration
         Schema::create('charges', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('level')->nullable();
             $table->timestamps();
         });
     }

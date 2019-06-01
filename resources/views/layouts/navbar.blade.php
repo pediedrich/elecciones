@@ -24,7 +24,7 @@
                 &nbsp;
             </ul>
             <ul class="nav navbar-nav navbar-left">
-              <a class="navbar-brand" href="{{ route('cargar') }}">
+              <a class="navbar-brand" href="{{ route('loadVotes') }}">
                 Cargar por Mesa
               </a>
               {{-- <a class="navbar-brand" href="{{ url('/home') }}">
